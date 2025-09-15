@@ -1,0 +1,60 @@
+/**
+ * Meiryo Sans Editor: TinyMCE Editor Styles
+ * 
+ * このファイルはWordPressのTinyMCEエディター（Classic Editor）の
+ * フォント表示を改善するためのスタイルシートです。
+ * 
+ * @package MeiryoSansEditor
+ * @version 1.0.3
+ * @author riragon.
+ */
+
+/* =============================================================================
+   メインフォント設定
+   ============================================================================= */
+
+/**
+ * TinyMCEエディターのメインボディにメイリオ系フォントを適用
+ * Windows環境での日本語表示に最適化されたフォントスタック
+ */
+body.mce-content-body, 
+body#tinymce {
+    font-family: "メイリオ", Meiryo, "Yu Gothic", "Yu Gothic UI", "ＭＳ Ｐゴシック", "MS PGothic", sans-serif !important;
+}
+
+/* =============================================================================
+   テキスト要素の継承設定
+   ============================================================================= */
+
+/**
+ * 各テキスト要素にフォントファミリーを継承させる
+ * エディター内の一貫した表示を保証
+ */
+.mce-content-body,
+.mce-content-body p,
+.mce-content-body div,
+.mce-content-body span,
+.mce-content-body li,
+.mce-content-body td,
+.mce-content-body th,
+.mce-content-body pre,
+.mce-content-body code,
+.mce-content-body blockquote {
+    font-family: inherit !important;
+}
+
+/* =============================================================================
+   メディア要素の調整
+   ============================================================================= */
+
+/**
+ * 画像要素の表示を確実にする
+ * 一部のテーマで画像が非表示になる問題を防ぐ
+ */
+.mce-content-body img { 
+    display: inline-block !important; 
+    opacity: 1 !important; 
+    filter: none !important; 
+}
+
+
