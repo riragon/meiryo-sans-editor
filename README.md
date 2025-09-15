@@ -1,6 +1,6 @@
 Windows 環境の WordPress で、Classic Editor (TinyMCE) と「テキスト」タブのフォントをメイリオ系サンセリフに統一し、日本語の可読性を高めるシンプルなプラグインです。
 
-![Uploading bandicam 2025-09-15 10-25-47-356.jpg…]()
+![bandicam 2025-09-15 10-25-47-356](https://github.com/user-attachments/assets/8f675ddd-9d85-494b-ae95-f30d68d79393)
 
 
 環境によってはWordPressに問題を起こすことがあるかもしれない。必ずテスト環境で試すか、問題が発生したときにFTPでログインして対応できるようにしてからチャレンジしてください。Classic Editor プラグインの併用が必要です。
@@ -82,6 +82,7 @@ Windows 環境の WordPress で、Classic Editor (TinyMCE) と「テキスト」
 ### 注意事項
 - 本プラグインは **Windows 環境向け** に最適化されています。macOS や Linux では同等のフォントが存在しないため意図通り表示されない場合があります。
 - エディター専用のスタイルです。サイトの公開側（フロントエンド）のフォントには影響しません。
+
 
 
 
