@@ -60,16 +60,16 @@ class MeiryoSansEditor {
 	/**
 	 * 初期化処理
 	 */
-	public function init() {
-		// セキュリティ: 管理画面でのみ動作
-		if (!is_admin()) {
-			return;
-		}
-		
-		// セキュリティ: 適切な権限チェック
-		if (!current_user_can('edit_posts') && !current_user_can('edit_pages')) {
-			return;
-		}
+        public function init() {
+                // セキュリティ: 管理画面でのみ動作
+                if (!is_admin()) {
+                        return;
+                }
+
+                // セキュリティ: 適切な権限チェック
+                if (!$this->user_can_edit_content()) {
+                        return;
+                }
 		
 		add_filter('mce_css', array($this, 'add_tinymce_css'));
 		add_action('admin_head-post.php', array($this, 'add_admin_editor_css'));
@@ -91,11 +91,11 @@ class MeiryoSansEditor {
 	 * @param string $mce_css 既存のCSS
 	 * @return string 更新されたCSS
 	 */
-	public function add_tinymce_css($mce_css) {
-		// セキュリティ: nonce検証（TinyMCEの場合は管理画面でのみ動作するため権限チェックで十分）
-		if (!current_user_can('edit_posts') && !current_user_can('edit_pages')) {
-			return $mce_css;
-		}
+        public function add_tinymce_css($mce_css) {
+                // セキュリティ: nonce検証（TinyMCEの場合は管理画面でのみ動作するため権限チェックで十分）
+                if (!$this->user_can_edit_content()) {
+                        return $mce_css;
+                }
 		
 		$css_url = MEIRYO_SANS_EDITOR_PLUGIN_URL . 'editor-style.css';
 		
@@ -112,17 +112,17 @@ class MeiryoSansEditor {
 	/**
 	 * 「テキスト」タブの textarea にフォント適用
 	 */
-	public function add_admin_editor_css() {
-		// セキュリティ: 権限チェック
-		if (!current_user_can('edit_posts') && !current_user_can('edit_pages')) {
-			return;
-		}
-		
-		// セキュリティ: nonce検証（編集画面では自動で検証されているが、念のため）
-		global $pagenow;
-		if (!in_array($pagenow, array('post.php', 'post-new.php'), true)) {
-			return;
-		}
+        public function add_admin_editor_css() {
+                // セキュリティ: 権限チェック
+                if (!$this->user_can_edit_content()) {
+                        return;
+                }
+
+                // セキュリティ: nonce検証（編集画面では自動で検証されているが、念のため）
+                global $pagenow;
+                if (!$this->is_edit_screen($pagenow)) {
+                        return;
+                }
 		
 		// セキュリティ: フォントスタックをエスケープ
 		$font_stack = esc_attr($this->get_font_stack());
@@ -144,10 +144,29 @@ class MeiryoSansEditor {
 	/**
 	 * プラグインのアンインストール処理
 	 */
-	public static function uninstall() {
-		// 現在は設定を保存していないため、特に処理なし
-		// 将来的に設定を保存する場合はここで削除
-	}
+        public static function uninstall() {
+                // 現在は設定を保存していないため、特に処理なし
+                // 将来的に設定を保存する場合はここで削除
+        }
+
+        /**
+         * 投稿・ページの編集権限を確認
+         *
+         * @return bool
+         */
+        private function user_can_edit_content() {
+                return current_user_can('edit_posts') || current_user_can('edit_pages');
+        }
+
+        /**
+         * 投稿・固定ページの編集画面か判定
+         *
+         * @param string $current_screen 現在の画面。
+         * @return bool
+         */
+        private function is_edit_screen($current_screen) {
+                return in_array($current_screen, array('post.php', 'post-new.php'), true);
+        }
 }
 
 /**
